@@ -222,7 +222,15 @@ public class FrameworkParsingPackageUtils {
                     return false;
                 }
             } else {
-                if (!TextUtils.equals(currValue, propValues[i])) {
+                   final String value = propValues[i];
+            if(value.startsWith("+")) {
+                final java.util.regex.Pattern regex = java.util.regex.Pattern.compile(value.substring(1, value.length()).replace("*", ".*"));
+                java.util.regex.Matcher matcher = regex.matcher(currValue);
+                if (!matcher.find()) {
+                    return false;
+                }
+            } else {
+                if(!value.equals(currValue)) {
                     return false;
                 }
             }
