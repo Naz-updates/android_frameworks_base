@@ -23,6 +23,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.provider.AlarmClock;
 import android.util.AttributeSet;
@@ -284,8 +285,10 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mStatusIconsView.setVisibility(gone ? View.GONE : View.VISIBLE);
         mDatePrivacyView.setVisibility(gone ? View.GONE : View.VISIBLE);
 
-        mRoundedCornerPadding = resources.getDimensionPixelSize(
-                R.dimen.rounded_corner_content_padding);
+        mRoundedCornerPadding = SystemProperties.getInt("persist.sys.phh.rounded_corners_padding", -1);
+        if(mRoundedCornerPadding == -1)
+            mRoundedCornerPadding = resources.getDimensionPixelSize(
+                    R.dimen.rounded_corner_content_padding);
 
         int statusBarHeight = SystemBarUtils.getStatusBarHeight(mContext);
 
